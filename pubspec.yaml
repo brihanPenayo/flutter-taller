@@ -1,0 +1,44 @@
+name: taller
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.5 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter: ^1.10.16
+  cupertino_icons: ^1.0.2
+  tie_picker: ^0.0.2
+  flutter_dotenv: ^5.1.0
+  get_it: ^7.6.2
+  logger: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_application_id: ^2.0.0-dev
+  flutter_lints: ^2.0.0
+
+
+flutter_application_id:
+  android:
+    id: "dev.unacorbatanegra.taller"
+    name: "Taller"
+  ios:
+    id: "dev.unacorbatanegra.taller"
+    name: "Taller"
+flutter:
+  uses-material-design: true
+  assets:
+    - .env 
+    - assets/fonts/
+    - assets/images/
+  fonts:
+    - family: Majes
+      fonts:
+        - asset: assets/fonts/Majes_icons.ttf
