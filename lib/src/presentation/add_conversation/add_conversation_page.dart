@@ -23,7 +23,7 @@ class _UsersPageState extends State<UsersPage> {
   @override
   void initState() {
     id = supabase.auth.currentUser!.id;
-
+    log.d(id);
     future = supabase
         .from('profiles')
         .select<List<Map<String, dynamic>>>('*')
@@ -156,7 +156,6 @@ class _UsersPageState extends State<UsersPage> {
     try {
       if (!mounted) return;
       context.showPreloader();
-      log.d('need to be created');
       final c = await supabase
           .from('conversations')
           .upsert(conversation.toMap())

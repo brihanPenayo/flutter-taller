@@ -83,7 +83,7 @@ class _ConversationPageState extends State<ConversationPage> {
             }
             if (snapshot.hasError) {
               return Center(
-                child: Text('${snapshot.error}'),
+                child: Text('kjhkjh ${snapshot.error}'),
               );
             }
             if (!snapshot.hasData) {
@@ -166,7 +166,7 @@ class _ConversationPageState extends State<ConversationPage> {
       });
       if (!mounted) return;
     } catch (e) {
-      context.showErrorSnackBar(message: e.toString());
+      context.showErrorSnackBar(message: 'ha ocurrido un error');
       return;
     }
     setState(() {

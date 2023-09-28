@@ -86,7 +86,24 @@ class _ConversationsPageState extends State<ConversationsPage> {
         builder: (ctx) => const UsersPage(),
       );
 
-  void onTap(Conversation item) {
+  void onTap(Conversation item) async {
+    // Obtén la instancia de SupabaseClient desde el contexto
     Navigator.of(context).pushNamed('/conversation', arguments: item);
+
+    // Realiza la actualización de la columna 'unread' a 0 en la tabla 'conversations'
+    // final response = await supabase
+    //     .from('conversations')
+    //     .update({'unread': 0}).eq('id', item.id);
+    // // .execute();
+
+    // if (response.error != null) {
+    //   // Maneja el error en caso de que ocurra
+    //   log.d('Error: ${response.error.message}');
+    // } else {
+    //   // La actualización fue exitosa
+    //   log.d('Actualización exitosa');
+    // }
+
+    // Navega a la pantalla '/conversation' con los argumentos 'item'
   }
 }
