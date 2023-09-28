@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/presentation/add_conversation/widgets/add_title_overlay.dart';
+import 'package:flutt_chat/src/presentation/add_conversation/widgets/add_title_overlay.dart';
 
 import '../../models/models.dart';
 import '../../utils/utils.dart';

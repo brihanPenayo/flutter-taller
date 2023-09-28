@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/utils/utils.dart';
+import 'package:flutt_chat/src/utils/utils.dart';
 
 import '../../../models/models.dart';
 import '../../widgets/widgets.dart';
@@ -62,9 +62,9 @@ class _ConversationWidgetState extends State<ConversationWidget> {
         return ListTile(
           contentPadding: zero,
           leading: CircleAvatar(
-            child: Text(snapshot.data!.substring(0, 2)),
             backgroundColor: AppTheme.theme.primaryColor,
             foregroundColor: Colors.white,
+            child: Text(snapshot.data!.substring(0, 2)),
           ),
           onTap: widget.onTap,
           subtitle: Row(

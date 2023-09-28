@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/presentation/widgets/widgets.dart';
-import 'package:taller/src/utils/utils.dart';
+import 'package:flutt_chat/src/presentation/widgets/widgets.dart';
+import 'package:flutt_chat/src/utils/utils.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

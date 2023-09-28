@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/presentation/widgets/widgets.dart';
+import 'package:flutt_chat/src/presentation/widgets/widgets.dart';
 
 import '../../utils/utils.dart';
 

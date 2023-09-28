@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/presentation/complete_profile/complete_profile.dart';
-import 'package:taller/src/presentation/conversation/conversation_page.dart';
-import 'package:taller/src/presentation/login/login_page.dart';
-import 'package:taller/src/presentation/register/register_page.dart';
-import 'package:taller/src/presentation/root/root_page.dart';
-import 'package:taller/src/presentation/splash/splah_page.dart';
-import 'package:taller/src/presentation/widgets/widgets.dart';
-import 'package:taller/src/utils/utils.dart';
+import 'package:flutt_chat/src/presentation/complete_profile/complete_profile.dart';
+import 'package:flutt_chat/src/presentation/conversation/conversation_page.dart';
+import 'package:flutt_chat/src/presentation/login/login_page.dart';
+import 'package:flutt_chat/src/presentation/register/register_page.dart';
+import 'package:flutt_chat/src/presentation/root/root_page.dart';
+import 'package:flutt_chat/src/presentation/splash/splah_page.dart';
+import 'package:flutt_chat/src/presentation/widgets/widgets.dart';
+import 'package:flutt_chat/src/utils/utils.dart';
 
 void main() async {
   await dotenv.load();
@@ -22,7 +22,7 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
     ),
   );
 
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'FluttChat',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       initialRoute: '/splash',

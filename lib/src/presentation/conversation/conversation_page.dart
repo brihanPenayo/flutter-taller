@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/models/models.dart';
-import 'package:taller/src/presentation/conversation/widgets/chat_text_field.dart';
-import 'package:taller/src/presentation/conversation/widgets/message_widget.dart';
-import 'package:taller/src/utils/utils.dart';
+import 'package:flutt_chat/src/models/models.dart';
+import 'package:flutt_chat/src/presentation/conversation/widgets/chat_text_field.dart';
+import 'package:flutt_chat/src/presentation/conversation/widgets/message_widget.dart';
+import 'package:flutt_chat/src/utils/utils.dart';
 
 import '../widgets/widgets.dart';
 

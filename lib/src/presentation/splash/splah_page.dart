@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:taller/src/utils/utils.dart';
+import 'package:flutt_chat/src/utils/utils.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
