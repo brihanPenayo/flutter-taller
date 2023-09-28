@@ -63,6 +63,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
           contentPadding: zero,
           leading: CircleAvatar(
             child: Text(snapshot.data!.substring(0, 2)),
+            backgroundColor: AppTheme.theme.primaryColor,
+            foregroundColor: Colors.white,
           ),
           onTap: widget.onTap,
           subtitle: Row(

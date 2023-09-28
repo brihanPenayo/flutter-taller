@@ -26,6 +26,7 @@ class _MenuPageState extends State<MenuPage> {
       ),
     );
   }
+
   void onSignOut() async {
     try {
       context.showPreloader();

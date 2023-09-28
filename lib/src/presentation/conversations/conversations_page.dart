@@ -39,13 +39,19 @@ class _ConversationsPageState extends State<ConversationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conversaciones'),
+        leading: IconButton(
+          onPressed: onSignOut,
+          icon: const Icon(Majes.logout_line),
+        ),
+        centerTitle: true,
+        title: const Text('Chats'),
         actions: [
-          CupertinoButton(
-            onPressed: addConversation,
-            child: const Icon(Icons.add_circle),
-          )
+          IconButton(
+            onPressed: onSignOut,
+            icon: const Icon(Majes.user_line),
+          ),
         ],
+        backgroundColor: AppTheme.theme.primaryColor,
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -72,12 +78,26 @@ class _ConversationsPageState extends State<ConversationsPage> {
                   onTap: () => onTap(item),
                 );
               },
-              separatorBuilder: (ctx, idx) => gap6,
+              separatorBuilder: (ctx, idx) => const Divider(
+                color: Colors.grey,
+                thickness: 0.5,
+                height: 0.5,
+              ),
               itemCount: list.length,
+              // padding: EdgeInsets.zero,
             );
           },
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   shape:
+      //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      //   // backgroundColor: Colors.deepPurple,
+      //   onPressed: addConversation,
+      //   child: const Icon(Icons.add),
+
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -85,6 +105,20 @@ class _ConversationsPageState extends State<ConversationsPage> {
         context: context,
         builder: (ctx) => const UsersPage(),
       );
+
+  void onSignOut() async {
+    try {
+      context.showPreloader();
+      await supabase.auth.signOut();
+      if (!mounted) return;
+      await context.hidePreloader();
+    } on Exception catch (e) {
+      context.showErrorSnackBar(message: e.toString());
+      return;
+    }
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+  }
 
   void onTap(Conversation item) async {
     // Obtén la instancia de SupabaseClient desde el contexto

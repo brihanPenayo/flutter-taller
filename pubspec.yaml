@@ -27,11 +27,11 @@ dev_dependencies:
 
 flutter_application_id:
   android:
-    id: "dev.unacorbatanegra.taller"
-    name: "Taller"
+    id: "dev.brihanpenayo.flutter_chat"
+    name: "FlutChat"
   ios:
-    id: "dev.unacorbatanegra.taller"
-    name: "Taller"
+    id: "dev.brihanpenayo.flutter_chat"
+    name: "FlutChat"
 flutter:
   uses-material-design: true
   assets:

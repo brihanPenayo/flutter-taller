@@ -13,22 +13,22 @@ mixin AppTheme {
 
   static final theme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColor: Palette.primary,
-    
+    primaryColor: Colors.deepPurple,
+
     // primaryColorBrightness: Brightness.dark,
 
     fontFamily: 'Poppins',
     colorScheme: const ColorScheme(
-      secondary: Palette.primary,
+      secondary: Colors.white,
       onBackground: Colors.black,
       onError: Colors.white,
       brightness: Brightness.light,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      surface: Colors.white,
+      surface: Colors.red,
       // primaryVariant: Palette.primary,
       error: Colors.red,
-      
+
       // secondaryVariant: Palette.primary,
       background: Palette.background,
       onSurface: Colors.white,
@@ -70,19 +70,17 @@ mixin AppTheme {
       labelColor: Colors.purple,
     ),
     appBarTheme: const AppBarTheme(
-      color: Colors.transparent,
+      color: Colors.deepPurple,
       elevation: 0,
-      centerTitle: false,
+      centerTitle: true,
       titleTextStyle: TextStyle(
-        color: Palette.gray1,
+        color: Colors.white,
         fontWeight: FontWeight.w600,
         fontSize: 24.0,
       ),
-      iconTheme: IconThemeData(
-        color: Palette.primary,
-      ),
+      iconTheme: IconThemeData(color: Colors.white),
       // brightness: Brightness.dark,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     // scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -143,8 +141,7 @@ mixin AppTheme {
       showUnselectedLabels: false,
       showSelectedLabels: false,
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Palette.primary,
-    ),
+    floatingActionButtonTheme:
+        const FloatingActionButtonThemeData(backgroundColor: Colors.deepPurple),
   );
 }
