@@ -68,6 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 hint: 'ingrese su contraseña',
                 suffix: IconButton.filled(
                   onPressed: changeObscure,
+                  color: AppTheme.theme.primaryColor,
                   icon: Icon(
                     icon(),
                   ),

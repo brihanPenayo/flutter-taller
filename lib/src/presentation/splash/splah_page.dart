@@ -1,3 +1,4 @@
+import 'package:flutt_chat/src/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutt_chat/src/utils/utils.dart';
@@ -42,9 +43,13 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(
+            child: CircularProgressIndicator(
+          color: Colors.white,
+          backgroundColor: AppTheme.theme.primaryColor,
+        )),
       ),
     );
   }

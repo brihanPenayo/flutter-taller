@@ -43,7 +43,7 @@ class _RootPageState extends State<RootPage> {
 
         child: const Icon(Icons.add, size: 32),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

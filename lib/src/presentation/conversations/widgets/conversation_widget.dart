@@ -62,9 +62,12 @@ class _ConversationWidgetState extends State<ConversationWidget> {
         return ListTile(
           contentPadding: zero,
           leading: CircleAvatar(
-            backgroundColor: AppTheme.theme.primaryColor,
-            foregroundColor: Colors.white,
-            child: Text(snapshot.data!.substring(0, 2)),
+            // backgroundColor: AppTheme.theme.primaryColor,
+            backgroundImage: NetworkImage(
+                'https://img2.freepng.es/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'),
+            // foregroundColor: Colors.white,
+            // child:
+            // Text(snapshot.data!.substring(0, 2)),
           ),
           onTap: widget.onTap,
           subtitle: Row(

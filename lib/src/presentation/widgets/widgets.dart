@@ -98,7 +98,7 @@ extension ShowSnackBar on BuildContext {
         return Center(
           child: Container(
             decoration: BoxDecoration(
-              color: Palette.primary.withOpacity(.7),
+              color: AppTheme.theme.primaryColor.withOpacity(0.7),
               borderRadius: const BorderRadius.all(
                 Radius.circular(8.0),
               ),

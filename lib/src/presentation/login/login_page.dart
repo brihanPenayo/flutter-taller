@@ -54,10 +54,11 @@ class _LoginPageState extends State<LoginPage> {
                 autofillHints: const [AutofillHints.password],
                 textCapitalization: TextCapitalization.none,
                 keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 hint: 'ingrese su contraseña',
                 suffix: IconButton.filled(
                   onPressed: changeObscure,
+                  color: AppTheme.theme.primaryColor,
                   icon: Icon(
                     icon(),
                   ),
@@ -71,8 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 label: 'Iniciar sesión',
               ),
               gap16,
-              TextButton(
-                  onPressed: onRegister, child: const Text('Registrarme'))
+              CustomButton.outline(onTap: onRegister, label: 'Registrarme')
             ],
           ),
         ),

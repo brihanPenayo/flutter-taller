@@ -117,7 +117,7 @@ class CustomTextField extends StatelessWidget {
           readOnly: readOnly,
           maxLines: maxLines,
           onChanged: onChanged,
-
+          cursorColor: AppTheme.theme.primaryColor,
           inputFormatters: formatters,
           // cursorHeight: 23,
           autofillHints: autofillHints,

@@ -40,8 +40,38 @@ class _ConversationsPageState extends State<ConversationsPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: onSignOut,
-          icon: const Icon(Majes.logout_line),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Cerrar sesión'),
+                  content:
+                      const Text('¿Estás seguro de que quieres cerrar sesión?'),
+                  actions: <Widget>[
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: AppTheme.theme.primaryColor),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancelar'),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: AppTheme.theme.primaryColor),
+                      onPressed: () {
+                        onSignOut();
+                      },
+                      child: const Text('Aceptar'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.logout),
         ),
         centerTitle: true,
         title: const Text('Chats'),
@@ -84,20 +114,10 @@ class _ConversationsPageState extends State<ConversationsPage> {
                 height: 0.5,
               ),
               itemCount: list.length,
-              // padding: EdgeInsets.zero,
             );
           },
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   shape:
-      //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      //   // backgroundColor: Colors.deepPurple,
-      //   onPressed: addConversation,
-      //   child: const Icon(Icons.add),
-
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

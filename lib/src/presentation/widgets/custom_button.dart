@@ -21,7 +21,7 @@ class CustomButton extends StatelessWidget {
     required this.label,
     this.minSize = 48,
     this.iconData,
-    this.backgroundColor = Palette.primary,
+    this.backgroundColor = Colors.deepPurple,
     this.iconColor = Colors.white,
   })  : outline = false,
         icon = false,
@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
     required this.label,
     this.minSize = 48,
     this.iconData,
-    this.backgroundColor = Palette.primary,
+    this.backgroundColor = Colors.white,
     this.iconColor = Colors.white,
   })  : outline = true,
         icon = false,
@@ -137,7 +137,7 @@ class CustomButton extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   fontFamily: 'Poppins',
-                  color: Palette.primary,
+                  color: Colors.deepPurple,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -190,27 +190,37 @@ class CustomButton extends StatelessWidget {
       );
     }
     if (outline) {
-      return CupertinoButton(
-        padding: EdgeInsets.zero,
-        onPressed: onTap,
-        child: Container(
-          constraints: BoxConstraints(minHeight: minSize),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(6)),
-            color: Palette.primary.withOpacity(.15),
-          ),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Palette.primary,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+      return GestureDetector(
+          // padding: EdgeInsets.zero,
+          onTap: onTap,
+          child: Align(
+            heightFactor: 1.0,
+            child: Container(
+              constraints: const BoxConstraints(minWidth: 44.0),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                border: Border.all(
+                  width: 1,
+                  color: AppTheme.theme.primaryColor,
+                ),
+                // color: AppTheme.theme.primaryColor.withOpacity(.15),
+              ),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 10.0,
+              ),
+              child: Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.deepPurple,
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
-          ),
-        ),
-      );
+          ));
     }
     return GestureDetector(
       onTap: onTap,
