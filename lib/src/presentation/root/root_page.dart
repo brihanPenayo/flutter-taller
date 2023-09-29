@@ -47,7 +47,7 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  void addConversation() => showCupertinoModalPopup(
+  void addConversation() => showCupertinoDialog(
         context: context,
         builder: (ctx) => const UsersPage(),
       );

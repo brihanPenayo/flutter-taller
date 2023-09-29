@@ -1,3 +1,4 @@
+import 'package:flutt_chat/src/presentation/profile_page/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -76,10 +77,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
         centerTitle: true,
         title: const Text('Chats'),
         actions: [
-          IconButton(
-            onPressed: onSignOut,
-            icon: const Icon(Majes.user_line),
-          ),
+          IconButton(icon: const Icon(Majes.user_line), onPressed: showProfile),
         ],
         backgroundColor: AppTheme.theme.primaryColor,
       ),
@@ -121,9 +119,9 @@ class _ConversationsPageState extends State<ConversationsPage> {
     );
   }
 
-  void addConversation() => showCupertinoModalPopup(
+  void showProfile() => showCupertinoDialog(
         context: context,
-        builder: (ctx) => const UsersPage(),
+        builder: (ctx) => const ProfileManager(),
       );
 
   void onSignOut() async {

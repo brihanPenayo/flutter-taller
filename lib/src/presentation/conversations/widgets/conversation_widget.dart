@@ -20,22 +20,22 @@ class ConversationWidget extends StatefulWidget {
 
 class _ConversationWidgetState extends State<ConversationWidget> {
   final supabase = getIt.get<SupabaseClient>();
-  Future<String> getTitle() async {
+  Future<dynamic> getTitle() async {
     if (widget.conversation.title.isNotEmpty) {
-      return widget.conversation.title;
+      return [widget.conversation.title, ""];
     }
     final myId = supabase.auth.currentUser!.id;
     final id = widget.conversation.participants.where((e) => e != myId).first;
     if (Profile.cache.containsKey(id)) {
-      return Profile.cache[id]!.display;
+      return Profile.cache[id]!.data;
     }
-    return supabase
+    return await supabase
         .from('profiles')
         .select()
         .eq('id', id)
         .single()
         .then((value) => Profile.cache[id] = Profile.fromMap(value))
-        .then((value) => value.display);
+        .then((value) => value.data);
   }
 
   @override
@@ -45,7 +45,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
+    return FutureBuilder<dynamic>(
       future: getTitle(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -62,12 +62,10 @@ class _ConversationWidgetState extends State<ConversationWidget> {
         return ListTile(
           contentPadding: zero,
           leading: CircleAvatar(
-            // backgroundColor: AppTheme.theme.primaryColor,
-            backgroundImage: NetworkImage(
-                'https://img2.freepng.es/20180505/upw/kisspng-computer-icons-avatar-businessperson-interior-desi-corporae-5aee195c6d1683.4671087315255535004468.jpg'),
-            // foregroundColor: Colors.white,
-            // child:
-            // Text(snapshot.data!.substring(0, 2)),
+            backgroundColor: AppTheme.theme.primaryColor.withOpacity(0.7),
+            foregroundColor: Colors.white,
+            foregroundImage: NetworkImage(snapshot.data![1]),
+            child: const Icon(Icons.person, size: 28),
           ),
           onTap: widget.onTap,
           subtitle: Row(
@@ -89,7 +87,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
               ),
             ],
           ),
-          title: Text(snapshot.data!),
+          title: Text(snapshot.data![0]),
         );
       },
     );
