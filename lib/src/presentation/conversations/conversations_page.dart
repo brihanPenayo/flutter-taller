@@ -1,8 +1,7 @@
-import 'package:flutt_chat/src/presentation/profile_page/profile_page.dart';
+import 'package:flutt_chat/src/presentation/complete_profile/complete_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutt_chat/src/presentation/add_conversation/add_conversation_page.dart';
 
 import '../../models/models.dart';
 import '../../utils/utils.dart';
@@ -121,7 +120,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   void showProfile() => showCupertinoDialog(
         context: context,
-        builder: (ctx) => const ProfileManager(),
+        builder: (ctx) => const CompleteProfile(),
       );
 
   void onSignOut() async {

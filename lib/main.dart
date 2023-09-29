@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutt_chat/src/presentation/profile_page/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,7 +55,6 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const RegisterPage(),
         '/conversation': (context) => const ConversationPage(),
         '/completeProfile': (context) => const CompleteProfile(),
-        // '/showProfile': (context) => const ProfileManager(),
       },
       // home: const HomePage(),
     );

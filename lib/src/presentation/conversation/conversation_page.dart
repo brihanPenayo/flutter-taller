@@ -83,7 +83,7 @@ class _ConversationPageState extends State<ConversationPage> {
             }
             if (snapshot.hasError) {
               return Center(
-                child: Text('kjhkjh ${snapshot.error}'),
+                child: Text('${snapshot.error}'),
               );
             }
             if (!snapshot.hasData) {

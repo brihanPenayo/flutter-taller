@@ -1,3 +1,4 @@
+import 'package:flutt_chat/src/components/avatar_profile/avatar_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -14,70 +15,140 @@ class CompleteProfile extends StatefulWidget {
 class _CompleteProfileState extends State<CompleteProfile> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+  String? _avatarUrl;
+  bool _isLoading = true;
   final key = GlobalKey<FormState>();
   bool obscure = true;
   final supabase = getIt.get<SupabaseClient>();
+
+  Future<void> _getProfile() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final userId = supabase.auth.currentUser!.id;
+      final data = await supabase
+          .from('profiles')
+          .select<Map<String, dynamic>>()
+          .eq('id', userId)
+          .single();
+      firstNameController.text = (data['first_name'] ?? '') as String;
+      lastNameController.text = (data['last_name'] ?? '') as String;
+      _avatarUrl = (data['avatar_url'] ?? '') as String;
+    } on PostgrestException catch (error) {
+      SnackBar(
+        content: Text(error.message),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    } catch (error) {
+      SnackBar(
+        content: const Text('Unexpected error occurred'),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _onUpload(String imageUrl) async {
+    try {
+      final userId = supabase.auth.currentUser!.id;
+      await supabase.from('profiles').upsert({
+        'id': userId,
+        'avatar_url': imageUrl,
+      });
+      if (mounted) {
+        const SnackBar(
+          content: Text('Updated your profile image!'),
+        );
+      }
+    } on PostgrestException catch (error) {
+      SnackBar(
+        content: Text(error.message),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    } catch (error) {
+      SnackBar(
+        content: const Text('Unexpected error occurred'),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    }
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _avatarUrl = imageUrl;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Completar perfil')),
-      bottomSheet: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(
-            right: 16,
-            left: 16,
-            bottom: 64,
-          ),
-          child: CustomButton(
-            onTap: onComplete,
-            label: "Guardar cambios",
+        appBar: AppBar(title: const Text('Completar perfil')),
+        bottomSheet: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+            child: CustomButton(
+              onTap: onComplete,
+              label: "Guardar cambios",
+            ),
           ),
         ),
-      ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        width: MediaQuery.of(context).size.width,
-        child: Form(
-          key: key,
-          child: Column(
-            // s
-            children: [
-              CustomTextField(
-                controller: firstNameController,
-                label: "Nombre",
-                required: true,
-                autofocus: true,
-                // textCapitalization: TextCapitalization.none,
-                keyboardType: TextInputType.emailAddress,
-                hint: 'ingrese su nombre',
-              ),
-              CustomTextField(
-                controller: lastNameController,
-                label: "Apellido",
-
-                // validator: ,
-                required: true,
-                // onTap: changeObscure,
-                // textCapitalization: TextCapitalization.nonnicoe,
-
-                hint: 'ingrese su apellido',
-              ),
-              gap32,
-            ],
-          ),
-        ),
-      ),
-    );
+        body: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: key,
+                    child: Column(
+                      children: [
+                        AvatarProfile(
+                            imageUrl: _avatarUrl, onUpload: _onUpload),
+                        gap16,
+                        CustomTextField(
+                          controller: firstNameController,
+                          label: "Nombre",
+                          required: true,
+                          autofocus: true,
+                          textCapitalization: TextCapitalization.words,
+                          keyboardType: TextInputType.emailAddress,
+                          hint: 'Ingrese su nombre',
+                        ),
+                        CustomTextField(
+                          controller: lastNameController,
+                          label: "Apellido",
+                          required: true,
+                          textCapitalization: TextCapitalization.words,
+                          hint: 'Ingrese su apellido',
+                        ),
+                        // gap32,
+                      ],
+                    ),
+                  ),
+                ),
+              ));
   }
 
   void onComplete() async {
     if (!key.currentState!.validate()) return;
-
     try {
       context.showPreloader();
       final data = {
         'first_name': firstNameController.text.trim(),
         'last_name': lastNameController.text.trim(),
+        'avatar_url': _avatarUrl,
       };
       await supabase.from('profiles').update(data).eq(
             'id',
@@ -97,6 +168,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
       return;
     }
     if (!mounted) return;
-    Navigator.of(context).pushNamedAndRemoveUntil('/splash', (route) => false);
+    Navigator.of(context).pop('/');
   }
 }
