@@ -24,15 +24,20 @@ dev_dependencies:
     sdk: flutter
   flutter_application_id: ^2.0.0-dev
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.11.0
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo.png"
 
 flutter_application_id:
   android:
     id: "dev.brihanpenayo.flutter_chat"
-    name: "FlutChat"
+    name: "Flutt Chat"
   ios:
     id: "dev.brihanpenayo.flutter_chat"
-    name: "FlutChat"
+    name: "Flutt Chat"
 flutter:
   uses-material-design: true
   assets:

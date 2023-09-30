@@ -65,7 +65,9 @@ class _ConversationWidgetState extends State<ConversationWidget> {
             backgroundColor: AppTheme.theme.primaryColor.withOpacity(0.7),
             foregroundColor: Colors.white,
             foregroundImage: NetworkImage(snapshot.data![1]),
-            child: const Icon(Icons.person, size: 28),
+            child: widget.conversation.title.isEmpty
+                ? const Icon(Icons.person, size: 28)
+                : const Icon(Icons.groups, size: 28),
           ),
           onTap: widget.onTap,
           subtitle: Row(

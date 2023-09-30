@@ -52,13 +52,14 @@ class _AvatarProfileState extends State<AvatarProfile> {
                   fit: BoxFit.cover,
                 ),
               )),
+        if (widget.imageUrl!.isNotEmpty) const Text("Toque para cambiar"),
       ],
     );
   }
 
   Future<void> _upload() async {
-    final picker = ImagePicker();
-    final imageFile = await picker.pickImage(
+    final ImagePicker picker = ImagePicker();
+    final XFile? imageFile = await picker.pickImage(
       source: ImageSource.gallery,
       maxWidth: 300,
       maxHeight: 300,
@@ -68,39 +69,22 @@ class _AvatarProfileState extends State<AvatarProfile> {
     }
     setState(() => _isLoading = true);
 
-    try {
-      final bytes = await imageFile.readAsBytes();
-      final fileExt = imageFile.path.split('.').last;
-      final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
-      final filePath = fileName;
-      await supabase.storage.from('avatars').uploadBinary(
-            filePath,
-            bytes,
-            fileOptions: FileOptions(contentType: imageFile.mimeType),
-          );
-      final imageUrlResponse = await supabase.storage
-          .from('avatars')
-          .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10);
-      widget.onUpload(imageUrlResponse);
-    } on StorageException catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
+    final fileExt = imageFile.path.split('.').last.toLowerCase();
+    final bytes = await imageFile.readAsBytes();
+    final userId = supabase.auth.currentUser!.id;
+    final filePath = '/$userId/profile';
+    await supabase.storage.from('avatars').uploadBinary(
+          filePath,
+          bytes,
+          fileOptions:
+              FileOptions(upsert: true, contentType: 'images/$fileExt'),
         );
-      }
-    } catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Unexpected error occurred'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
-      }
-    }
+
+    String imageUrl = supabase.storage.from('avatars').getPublicUrl(filePath);
+    imageUrl = Uri.parse(imageUrl).replace(queryParameters: {
+      't': DateTime.now().millisecondsSinceEpoch.toString()
+    }).toString();
+    widget.onUpload(imageUrl);
 
     setState(() => _isLoading = false);
   }

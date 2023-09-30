@@ -25,59 +25,28 @@ class _CompleteProfileState extends State<CompleteProfile> {
     setState(() {
       _isLoading = true;
     });
-    try {
-      final userId = supabase.auth.currentUser!.id;
-      final data = await supabase
-          .from('profiles')
-          .select<Map<String, dynamic>>()
-          .eq('id', userId)
-          .single();
-      firstNameController.text = (data['first_name'] ?? '') as String;
-      lastNameController.text = (data['last_name'] ?? '') as String;
-      _avatarUrl = (data['avatar_url'] ?? '') as String;
-    } on PostgrestException catch (error) {
-      SnackBar(
-        content: Text(error.message),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    } catch (error) {
-      SnackBar(
-        content: const Text('Unexpected error occurred'),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    final userId = supabase.auth.currentUser!.id;
+    final data = await supabase
+        .from('profiles')
+        .select<Map<String, dynamic>>()
+        .eq('id', userId)
+        .single();
+    firstNameController.text = (data['first_name'] ?? '') as String;
+    lastNameController.text = (data['last_name'] ?? '') as String;
+    _avatarUrl = (data['avatar_url'] ?? '') as String;
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   Future<void> _onUpload(String imageUrl) async {
-    try {
-      final userId = supabase.auth.currentUser!.id;
-      await supabase.from('profiles').upsert({
-        'id': userId,
-        'avatar_url': imageUrl,
-      });
-      if (mounted) {
-        const SnackBar(
-          content: Text('Updated your profile image!'),
-        );
-      }
-    } on PostgrestException catch (error) {
-      SnackBar(
-        content: Text(error.message),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    } catch (error) {
-      SnackBar(
-        content: const Text('Unexpected error occurred'),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    }
-    if (!mounted) {
-      return;
-    }
+    setState(() {
+      _avatarUrl = imageUrl;
+    });
+    final userId = supabase.auth.currentUser!.id;
+    await supabase
+        .from('profiles')
+        .update({'avatar_url': imageUrl}).eq('id', userId);
 
     setState(() {
       _avatarUrl = imageUrl;
@@ -93,7 +62,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Completar perfil')),
+        appBar: AppBar(title: const Text('Editar perfil')),
         bottomSheet: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
@@ -121,7 +90,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                           controller: firstNameController,
                           label: "Nombre",
                           required: true,
-                          autofocus: true,
+                          // autofocus: true,
                           textCapitalization: TextCapitalization.words,
                           keyboardType: TextInputType.emailAddress,
                           hint: 'Ingrese su nombre',
@@ -148,7 +117,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
       final data = {
         'first_name': firstNameController.text.trim(),
         'last_name': lastNameController.text.trim(),
-        'avatar_url': _avatarUrl,
       };
       await supabase.from('profiles').update(data).eq(
             'id',
@@ -168,6 +136,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
       return;
     }
     if (!mounted) return;
-    Navigator.of(context).pop('/');
+    Navigator.of(context).popAndPushNamed('/');
   }
 }

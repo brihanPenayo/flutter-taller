@@ -22,60 +22,74 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Iniciar sesión',
-                style: TextStyle(fontSize: 24),
+        child: SingleChildScrollView(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(
+              height: 200,
+              image: AssetImage(
+                'assets/images/big_logo.png',
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              CustomTextField(
-                controller: emailController,
-                label: 'Correo',
-                required: true,
-                autofocus: true,
-                textCapitalization: TextCapitalization.none,
-                autofillHints: const [AutofillHints.email],
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                hint: 'ingrese su correo',
-              ),
-              CustomTextField(
-                controller: passwordController,
-                label: 'Contraseña',
-                obscureText: obscure,
-                required: true,
-                autofillHints: const [AutofillHints.password],
-                textCapitalization: TextCapitalization.none,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                hint: 'ingrese su contraseña',
-                suffix: IconButton.filled(
-                  onPressed: changeObscure,
-                  color: AppTheme.theme.primaryColor,
-                  icon: Icon(
-                    icon(),
+            ),
+            gap16,
+            Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Iniciar sesión',
+                    style: TextStyle(fontSize: 24),
                   ),
-                ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  CustomTextField(
+                    controller: emailController,
+                    label: 'Correo',
+                    required: true,
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.none,
+                    autofillHints: const [AutofillHints.email],
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    hint: 'ingrese su correo',
+                  ),
+                  CustomTextField(
+                    controller: passwordController,
+                    label: 'Contraseña',
+                    obscureText: obscure,
+                    required: true,
+                    autofillHints: const [AutofillHints.password],
+                    textCapitalization: TextCapitalization.none,
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
+                    hint: 'ingrese su contraseña',
+                    suffix: IconButton.filled(
+                      onPressed: changeObscure,
+                      color: AppTheme.theme.primaryColor,
+                      icon: Icon(
+                        icon(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  CustomButton(
+                    onTap: onLogin,
+                    label: 'Iniciar sesión',
+                  ),
+                  gap16,
+                  CustomButton.outline(onTap: onRegister, label: 'Registrarme')
+                ],
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              CustomButton(
-                onTap: onLogin,
-                label: 'Iniciar sesión',
-              ),
-              gap16,
-              CustomButton.outline(onTap: onRegister, label: 'Registrarme')
-            ],
-          ),
-        ),
+            ),
+          ],
+        )),
       ),
     );
   }

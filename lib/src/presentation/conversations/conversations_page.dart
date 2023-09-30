@@ -94,7 +94,9 @@ class _ConversationsPageState extends State<ConversationsPage> {
               );
             }
             if (!snapshot.hasData) {
-              return const Center(child: Text('No hay conversaciones aún'));
+              return const Center(
+                  child: Text('No hay conversaciones aún',
+                      style: TextStyle(color: Colors.black)));
             }
             final list = snapshot.data!.toList();
             return ListView.separated(
@@ -140,21 +142,5 @@ class _ConversationsPageState extends State<ConversationsPage> {
   void onTap(Conversation item) async {
     // Obtén la instancia de SupabaseClient desde el contexto
     Navigator.of(context).pushNamed('/conversation', arguments: item);
-
-    // Realiza la actualización de la columna 'unread' a 0 en la tabla 'conversations'
-    // final response = await supabase
-    //     .from('conversations')
-    //     .update({'unread': 0}).eq('id', item.id);
-    // // .execute();
-
-    // if (response.error != null) {
-    //   // Maneja el error en caso de que ocurra
-    //   log.d('Error: ${response.error.message}');
-    // } else {
-    //   // La actualización fue exitosa
-    //   log.d('Actualización exitosa');
-    // }
-
-    // Navega a la pantalla '/conversation' con los argumentos 'item'
   }
 }

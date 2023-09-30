@@ -67,6 +67,8 @@ class _UsersPageState extends State<UsersPage> {
               final item = list[idx];
               return ListTile(
                 leading: CircleAvatar(
+                  backgroundColor: AppTheme.theme.primaryColor.withOpacity(0.7),
+                  foregroundColor: Colors.white,
                   child: Text(
                     item.firstName.substring(0, 2),
                   ),
