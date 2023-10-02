@@ -1,6 +1,6 @@
-# Taller de Flutter
+# Chat App en Flutter
 
-Este proyecto será realizado en el marco del Taller de Flutter, Septiembre de 2023
+Este proyecto se realizó en el marco del Taller de Flutter de GDG Encarnación, Septiembre de 2023
 
 ## Instrucciones
 
@@ -13,7 +13,7 @@ Este proyecto será realizado en el marco del Taller de Flutter, Septiembre de 2
 4. Crear proyecto de Flutter:
 
     ```bash
-    flutter create taller 
+    flutter create chat 
     ```
 
 5. Añadir las dependencias especificadas en el [pubspec.yaml](pubspec.yaml)
@@ -71,15 +71,4 @@ ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
 ### Demo
 
-![Frame 19](https://github.com/unacorbatanegra/taller_flutter/assets/44511181/07c32075-7913-4558-b392-38693ab5f0ba)
-
-### Tarea de Clase 2
-
-1. En el menu, agregar una entrada que nos lleve a nuestro perfil.
-
-2. Crear una pantalla que nos permita editar el perfil del usuario
-
-![simulator_screenshot_7514328C-AB73-4F59-BCB7-DF8F657C8F22](https://github.com/unacorbatanegra/taller/assets/44511181/b172df8a-db06-48b9-83d5-6346ab95c85a)
-
-
-
+<!-- ![Frame 19](https://github.com/unacorbatanegra/taller_flutter/assets/44511181/07c32075-7913-4558-b392-38693ab5f0ba) -->

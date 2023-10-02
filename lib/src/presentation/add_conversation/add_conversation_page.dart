@@ -36,7 +36,7 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Añadir usuario'),
+        title: const Text('Contactos'),
         actions: [
           CupertinoButton(
             onPressed: onSave,
