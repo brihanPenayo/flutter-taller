@@ -1,5 +1,6 @@
 import 'package:flutt_chat/src/components/avatar_profile/avatar_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../utils/utils.dart';
@@ -83,8 +84,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                     key: key,
                     child: Column(
                       children: [
-                        AvatarProfile(
-                            imageUrl: _avatarUrl, onUpload: _onUpload),
+                        AvatarProfile(imageUrl: _avatarUrl, onUpload: _upload),
                         gap16,
                         CustomTextField(
                           controller: firstNameController,
@@ -137,5 +137,49 @@ class _CompleteProfileState extends State<CompleteProfile> {
     }
     if (!mounted) return;
     Navigator.of(context).popAndPushNamed('/');
+  }
+
+  Future<void> _upload() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+
+      final XFile? imageFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        // maxWidth: 300,
+        // maxHeight: 300,
+      );
+      if (imageFile == null) {
+        return;
+      }
+      context.showPreloader();
+      // setState(() => _isLoading = true);
+
+      //context.showPreloader
+
+      final fileExt = imageFile.path.split('.').last.toLowerCase();
+      log.d(fileExt);
+      final bytes = await imageFile.readAsBytes();
+      final userId = supabase.auth.currentUser!.id;
+      final filePath = '/$userId/profile';
+      await supabase.storage.from('avatars').uploadBinary(
+            filePath,
+            bytes,
+            fileOptions:
+                FileOptions(upsert: true, contentType: 'images/$fileExt'),
+          );
+
+      String imageUrl = supabase.storage.from('avatars').getPublicUrl(filePath);
+      imageUrl = Uri.parse(imageUrl).replace(queryParameters: {
+        't': DateTime.now().millisecondsSinceEpoch.toString()
+      }).toString();
+      _onUpload(imageUrl);
+
+      context.hidePreloader();
+      // setState(() => _isLoading = false);
+    } catch (e, s) {
+      context.hidePreloader();
+      context.showErrorSnackBar(message: e.toString());
+      log.d(s);
+    }
   }
 }

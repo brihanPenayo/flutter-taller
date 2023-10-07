@@ -47,6 +47,7 @@ extension ShowSnackBar on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       content: Text(message),
       backgroundColor: backgroundColor,
+      duration: const Duration(seconds: 5),
     ));
   }
 

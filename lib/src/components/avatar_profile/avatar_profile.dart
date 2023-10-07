@@ -13,7 +13,7 @@ class AvatarProfile extends StatefulWidget {
   });
 
   final String? imageUrl;
-  final void Function(String) onUpload;
+  final void Function() onUpload;
 
   @override
   _AvatarProfileState createState() => _AvatarProfileState();
@@ -29,7 +29,7 @@ class _AvatarProfileState extends State<AvatarProfile> {
       children: [
         if (widget.imageUrl == null || widget.imageUrl!.isEmpty)
           GestureDetector(
-              onTap: _isLoading ? null : _upload,
+              onTap: _isLoading ? null : widget.onUpload,
               child: Container(
                 width: 200,
                 height: 200,
@@ -41,7 +41,7 @@ class _AvatarProfileState extends State<AvatarProfile> {
               ))
         else
           GestureDetector(
-              onTap: _isLoading ? null : _upload,
+              onTap: _isLoading ? null : widget.onUpload,
               child: Container(
                 width: 200,
                 height: 200,
@@ -56,36 +56,6 @@ class _AvatarProfileState extends State<AvatarProfile> {
       ],
     );
   }
-
-  Future<void> _upload() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? imageFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 300,
-      maxHeight: 300,
-    );
-    if (imageFile == null) {
-      return;
-    }
-    setState(() => _isLoading = true);
-
-    final fileExt = imageFile.path.split('.').last.toLowerCase();
-    final bytes = await imageFile.readAsBytes();
-    final userId = supabase.auth.currentUser!.id;
-    final filePath = '/$userId/profile';
-    await supabase.storage.from('avatars').uploadBinary(
-          filePath,
-          bytes,
-          fileOptions:
-              FileOptions(upsert: true, contentType: 'images/$fileExt'),
-        );
-
-    String imageUrl = supabase.storage.from('avatars').getPublicUrl(filePath);
-    imageUrl = Uri.parse(imageUrl).replace(queryParameters: {
-      't': DateTime.now().millisecondsSinceEpoch.toString()
-    }).toString();
-    widget.onUpload(imageUrl);
-
-    setState(() => _isLoading = false);
-  }
 }
+
+// Stacktrace
